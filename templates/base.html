@@ -1,0 +1,206 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#4285f4" />
+
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="icon" href="images/1.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-kuhdu7QTC5uJdCC7jaFfLKVY6uVlU6lHka1ZzP38kD0cVfUX57SklRVVhr9LO+SUQ+hIwKYFu3rHnI2UfatP2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style/style.css'%}">
+   {% block head %} {% endblock %}
+
+  </head>
+  <body>
+      <header>
+        <nav class="navbar navbar-expand-md navbar-dark">
+          {% if user.userprofile.profile_picture %}
+          <img src="{{ user.userprofile.profile_picture.url }}" alt="User Profile Picture" class="rounded-circle" width="40" height="40" />
+        {% else %}
+          <i class="fas fa-user fa-lg"></i>  <!-- fallback icon -->
+        {% endif %}        
+            <a class="navbar-brand" href="{% url 'product_list'%}">home</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li>
+                  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container">
+                      <img src="{% static 'img/1.png' %}" alt="Brand Logo" style="width:70px;display:block;margin:0 auto 18px;">
+                      <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav ms-auto">
+                          {% if user.is_authenticated %}
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                            </li>
+                            <li>
+                            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">
+                                Logout
+                              </button>
+                            </form>
+                            </li>
+                            
+                          {% else %}
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                  
+                </li>
+                <li>
+                  <div>
+                  </div>
+                </li>                    
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+      </header>
+      <section id="homepage-content">
+        <div class="table">
+            <table>
+                <caption>
+                  Things you can buy
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Images</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Clothes</th>
+                    <td>6 left</td>
+                    <td>Ksh2200</td>
+                    <td><img src="https://www.animatedimages.org/data/media/297/animated-clothes-and-fashion-image-0216.gif" alt="A pair of Shoes"></td>  
+                  </tr>
+                  <tr>
+                    <th scope="row">Tables</th>
+                    <td>10 left</td>
+                    <td>Ksh 3000</td>
+                    <td><img src="https://t3.ftcdn.net/jpg/03/08/57/00/240_F_308570068_XYo94iBAHQghEQKcEqainvg4KZdtrdHE.jpg" alt="A Table"></td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Chairs</th>
+                    <td>13 left</td>
+                    <td>Ksh 2500</td>
+                    <td><img src="https://t3.ftcdn.net/jpg/03/14/57/92/240_F_314579210_7Pzxxh7HCwXPz2XPRLawqVuj241h5II2.jpg" alt="A Chair"></td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Smartphones</th>
+                    <td>20 left</td>
+                    <td>Ksh 13000</td>
+                    <td><img src="https://t4.ftcdn.net/jpg/12/90/32/73/240_F_1290327347_ZYrzrykwZugTXjcr8wF0uK3K43cfV8qv.jpg" alt="A Phone"></td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+              <div class="card">
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/984/animated-beavis-and-butt-head-image-0002.gif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Quick start</h5>
+                    <p class="card-text">Here are some products you might be interested in.Enjoy;)😊</p>
+                    <a href="#prolist" class="btn btn-primary">Shoppers Heaven</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/325/animated-telephone-image-0064.gif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Phones</h5>
+                    <p class="card-text">Get your favorite phone bet you we got your favorite choice.</p>
+                    <a href="#" class="btn btn-primary">Phones</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/297/animated-clothes-and-fashion-image-0237.gif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Clothings</h5>
+                    <p class="card-text">Select your favorite look get local with the gang</p>
+                    <a href="#" class="btn btn-primary">Fabrics</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/1164/animated-electrician-image-0001.gif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Electronics</h5>
+                    <p class="card-text">Here are your favorite selection for you to window shop all you want</p>
+                    <a href="#" class="btn btn-primary">Electronics</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/1215/animated-gear-image-0008.gif" class="card-img-top" width="100" alt="Shoppers getting excited">
+                  <div class="card-body">
+                    <h5 class="card-title">Gears</h5>
+                    <p class="card-text">Here are your favorite gear equipments for outdoor shit.</p>
+                    <a href="#" class="btn btn-primary">Gears</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/67/animated-car-image-0127.gif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Cars</h5>
+                    <p class="card-text">We try to bring in only exotic cars that are not owned by us</p>
+                    <a href="#" class="btn btn-primary">Cars</a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                  <img src="https://www.animatedimages.org/data/media/1002/animated-boat-image-0142.gif" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Boats</h5>
+                    <p class="card-text">Get yourself a boat,but for real probably in gta6 imma delete all my files to hold it.</p>
+                    <a href="#" class="btn btn-primary">Boats</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img src="https://www.animatedimages.org/data/media/1422/animated-peter-pan-image-0170.gif" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Private Planes</h5>
+                  <p class="card-text">How much you got,but not really get yourself a chopper if you like.</p>
+                  <a href="#" class="btn btn-primary">Planes</a>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+      {% block content %}{% endblock %}
+     
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'script/java.js'%}"></script>
+  </body>
+  <footer>
+    <div class="footer">
+      &copy;john2025
+    </div>
+
+  </footer>
+</html>

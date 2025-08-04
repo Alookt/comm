@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% block content %}
+<div class="register-container">
+  <div class="register-card">
+    <div class="mb-3 text-center">
+      <img id="profilePreview" src="https://via.placeholder.com/100?text=Preview" alt="Profile Picture Preview" class="profile-preview rounded-circle" />
+    </div>    
+    <h2 class="card-title">Register</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+          {% for err in field.errors %}
+            <div class="text-danger small">{{ err }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-success w-100">Register</button>
+      <h3>or</h3>
+  
+      <a href="{% provider_login_url 'google' %}">login with google</a>
+    </form>
+    <a class="login-link" href="{% url 'login' %}">Already have an account? Login here.</a>
+  </div>
+</div>
+{% endblock %}

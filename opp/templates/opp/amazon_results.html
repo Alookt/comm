@@ -1,0 +1,12 @@
+<h1>Amazon Results for "{{ search_term }}"</h1>
+<ul>
+{% for item in results %}
+  <li>
+    <img src="{{ item.image }}" style="height:60px;">
+    <a href="{{ item.link }}">{{ item.title }}</a>
+    <p>Price: {{ item.price.value }} {{ item.price.currency }}</p>
+  </li>
+{% empty %}
+  <li>No products found.</li>
+{% endfor %}
+</ul>
