@@ -1,0 +1,10 @@
+bind = "127.0.0.1:8000"   # Bind to localhost only, matching Nginx proxy_pass
+workers = 4               # Number of worker processes, adjust based on CPU cores (2-4 per core)
+worker_class = "sync"     # Use sync workers for typical web apps; use 'gthread' or 'gevent' if async needed
+timeout = 120             # Increase timeout to 120 seconds to avoid premature worker aborts on slow requests
+max_requests = 1000       # Restart workers after this many requests to prevent memory leaks
+max_requests_jitter = 50  # Add randomness to max_requests to avoid all workers restarting simultaneously
+accesslog = "-"           # Log access to stdout (systemd or Docker captures it)
+errorlog = "-"            # Log errors to stdout
+loglevel = "info"         # Info level logging
+forwarded_allow_ips = "*" # Allow Nginx proxy headers like X-Forwarded-For

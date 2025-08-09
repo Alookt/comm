@@ -8,6 +8,25 @@ from django.db.models import Sum
 import base64
 from django.utils.timezone import now
 from datetime import timedelta
+from django.http import Http404
+
+class AdminLogin404Middleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Check if the requested path is the admin login page
+        if request.path == '/admin/login/':
+            # If the user is already authenticated and staff, allow normal access
+            if request.user.is_authenticated and request.user.is_staff:
+                return self.get_response(request)
+            # Otherwise, raise 404 to hide the admin login page
+            raise Http404("Page not found")
+
+        # For all other requests, continue as usual
+        response = self.get_response(request)
+        return response
+
 
 # @admin.register(Product)
 # class ProductAdmin(admin.ModelAdmin):
