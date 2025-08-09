@@ -16,7 +16,7 @@ class AdminLogin404Middleware:
 
     def __call__(self, request):
         # Check if the requested path is the admin login page
-        if request.path == '/admin/login/':
+        if request.path.startswith('/admin/'):
             # If the user is already authenticated and staff, allow normal access
             if request.user.is_authenticated and request.user.is_staff:
                 return self.get_response(request)
